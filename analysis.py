@@ -1,8 +1,6 @@
 
 # -*- coding: utf-8 -*-
-"""
-Web server log analysis
-"""
+""" Web server log analysis."""
 
 import re
 from collections import Counter
@@ -25,8 +23,8 @@ def parse_log(log):
     :return: re.iterator with 2 groups: user and platform
     """
     reg_log = re.finditer(r'(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-                          r' - - \[\d\d/\w{3,10}/\d{4}:\d{2}:\d{2}:\d{2}'
-                          r' \+\d{4}\]).+(\"\w{1,20}/\d*\.\d* \(.+\))', log)
+                          r' - - \[\d\d/\w{3,10}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4}\])'
+                          r'.+(\"\w{1,35}/\d+\.\d+ \(.+\))', log)
     return reg_log
 
 
