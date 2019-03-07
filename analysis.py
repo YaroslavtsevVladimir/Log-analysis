@@ -16,15 +16,15 @@ def read_log():
         return reader.read()
 
 
-def parse_log(log):
+def parse_log(log_file):
     """
     Parse log file
-    :param log: result of read_log()
+    :param log_file: result of read_log()
     :return: re.iterator with 2 groups: user and platform
     """
     reg_log = re.finditer(r'(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - - '
                           r'\[\d\d/\w{3,10}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4}\])'
-                          r'.+(\"\w{1,35}/\d+\.\d+ \(.+\))', log)
+                          r'.+(\"\w{1,35}/\d+\.\d+ \(.+\))', log_file)
     return reg_log
 
 
@@ -34,8 +34,8 @@ def get_user(reg):
     :return: list with nested tuple (user, quantity)
     """
 
-    ip_list = [user.group(1) for user in reg]
-    counter_user = Counter(ip_list).most_common(10)
+    user_list = [user.group(1) for user in reg]
+    counter_user = Counter(user_list).most_common(10)
     return counter_user
 
 
