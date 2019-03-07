@@ -22,8 +22,8 @@ def parse_log(log):
     :param log: result of read_log()
     :return: re.iterator with 2 groups: user and platform
     """
-    reg_log = re.finditer(r'(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-                          r' - - \[\d\d/\w{3,10}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4}\])'
+    reg_log = re.finditer(r'(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - - '
+                          r'\[\d\d/\w{3,10}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4}\])'
                           r'.+(\"\w{1,35}/\d+\.\d+ \(.+\))', log)
     return reg_log
 
@@ -36,7 +36,6 @@ def get_user(reg):
 
     ip_list = [user.group(1) for user in reg]
     counter_user = Counter(ip_list).most_common(10)
-
     return counter_user
 
 
@@ -48,20 +47,15 @@ def get_platform(reg):
 
     platform_list = [plat.group(2) for plat in reg]
     counter_platform = Counter(platform_list).most_common(5)
-
     return counter_platform
 
 
 def main():
-    """
-    main()
-    :return: None
-    """
+    log = read_log()
+    parse = list(parse_log(log))
     print get_user(parse), '\n'
     print get_platform(parse)
 
 
 if __name__ == '__main__':
-    log = read_log()
-    parse = list(parse_log(log))
     main()
